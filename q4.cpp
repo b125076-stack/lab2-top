@@ -1,47 +1,43 @@
 #include <iostream>
 using namespace std;
 
-class HotelRoom
+class ElectricityMeter
 {
 private:
-    int roomNo, days;
-    string guestName;
-    float costPerDay, totalRent;
+    int meterNumber;
+    string consumerName;
+    float unitsConsumed;
 
 public:
-    void input()
+    ElectricityMeter(int meter, string name, float units)
     {
-        cout << "Enter Room Number: ";
-        cin >> roomNo;
-        cout << "Enter Guest Name: ";
-        cin >> guestName;
-        cout << "Enter Number of Days: ";
-        cin >> days;
-        cout << "Enter Cost Per Day: ";
-        cin >> costPerDay;
+        meterNumber = meter;
+        consumerName = name;
+        unitsConsumed = units;
     }
 
-    void calculate()
-    {
-        totalRent = days * costPerDay;
-    }
-
-    void display()
-    {
-        cout << "\nBooking Details\n";
-        cout << "Room Number : " << roomNo << endl;
-        cout << "Guest Name : " << guestName << endl;
-        cout << "Days Stayed : " << days << endl;
-        cout << "Cost Per Day : " << costPerDay << endl;
-        cout << "Total Rent : " << totalRent << endl;
-    }
+    friend void checkUsage(ElectricityMeter e);
 };
+
+void checkUsage(ElectricityMeter e)
+{
+    cout << "Meter Number: " << e.meterNumber << endl;
+    cout << "Consumer Name: " << e.consumerName << endl;
+    cout << "Units Consumed: " << e.unitsConsumed << endl;
+
+    if (e.unitsConsumed < 100)
+        cout << "Usage Category: Low Usage" << endl;
+    else if (e.unitsConsumed <= 300)
+        cout << "Usage Category: Moderate Usage" << endl;
+    else
+        cout << "Usage Category: High Usage" << endl;
+}
 
 int main()
 {
-    HotelRoom h;
-    h.input();
-    h.calculate();
-    h.display();
+    ElectricityMeter e(101, "Nishant", 100);
+
+    checkUsage(e);
+
     return 0;
 }

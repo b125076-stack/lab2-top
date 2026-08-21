@@ -1,46 +1,83 @@
 #include <iostream>
 using namespace std;
 
-class WaterBill
+class Classroom
 {
 private:
-    int consumerNo, litres;
-    string consumerName;
-    float bill;
+    string className;
+    int totalStudents;
+    int presentStudents;
+    string attendanceStatus;
 
 public:
-    void input()
+    Classroom(string name, int total)
     {
-        cout << "Enter Consumer Number: ";
-        cin >> consumerNo;
-        cout << "Enter Consumer Name: ";
-        cin >> consumerName;
-        cout << "Enter Water Consumption (Litres): ";
-        cin >> litres;
+        className = name;
+        totalStudents = total;
+        presentStudents = 0;
+        attendanceStatus = "Not Completed";
     }
 
-    void calculate()
+    friend class AttendanceManager;
+};
+
+class AttendanceManager
+{
+public:
+    void displayInformation(Classroom &c)
     {
-        if (litres <= 500)
-            bill = litres * 2;
-        else if (litres <= 1000)
-            bill = (500 * 2) + ((litres - 500) * 3);
+        cout << "Class Name: " << c.className << endl;
+        cout << "Total Students: " << c.totalStudents << endl;
+        cout << "Present Students: " << c.presentStudents << endl;
+        cout << "Attendance Status: " << c.attendanceStatus << endl;
+    }
+
+    void updatePresentStudents(Classroom &c, int present)
+    {
+        if (present <= c.totalStudents)
+        {
+            c.presentStudents = present;
+            cout << "Present student count updated." << endl;
+        }
         else
-            bill = (500 * 2) + (500 * 3) + ((litres - 1000) * 5);
+        {
+            cout << "Invalid number of students." << endl;
+        }
     }
 
-    void display()
+    void markAttendanceCompleted(Classroom &c)
     {
-        cout << "\nConsumer Name : " << consumerName;
-        cout << "\nWater Bill : Rs. " << bill;
+        c.attendanceStatus = "Completed";
+        cout << "Attendance marked as completed." << endl;
+    }
+
+    void displayAttendanceStatus(Classroom &c)
+    {
+        cout << "Attendance Status: "
+             << c.attendanceStatus << endl;
+    }
+
+    void calculateAbsentStudents(Classroom &c)
+    {
+        int absentStudents =
+            c.totalStudents - c.presentStudents;
+
+        cout << "Absent Students: " << absentStudents << endl;
     }
 };
 
 int main()
 {
-    WaterBill w;
-    w.input();
-    w.calculate();
-    w.display();
+    Classroom c("CSE-b", 70);
+    AttendanceManager manager;
+
+    manager.updatePresentStudents(c, 52);
+
+    manager.markAttendanceCompleted(c);
+
+    manager.displayInformation(c);
+
+    manager.calculateAbsentStudents(c);
+
     return 0;
 }

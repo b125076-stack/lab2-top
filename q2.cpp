@@ -1,26 +1,44 @@
-#include<iostream>
-using namespace std; 
+#include <iostream>
+using namespace std;
 
-    class square 
+class UserAccount
+{
+private:
+    string username;
+    int loginAttempts;
+    string accountStatus;
+
+public:
+    UserAccount(string name, int attempts, string status)
     {
-        float side;
-        public:
-        void input()
-        {
-            cout<< " enter the side";
-            cin>> side;
-
-        }
-        void display()
-        {
-            cout<<" the area ="<< side * side<< endl;
-            cout<<" perimeter ="<< 4*side<< endl;
-
-        }
-    };
-    int main(){
-        square s;
-        s.input();
-        s.display();
-        return 0;
+        username = name;
+        loginAttempts = attempts;
+        accountStatus = status;
     }
+
+    friend void checkAccount(UserAccount u);
+};
+
+void checkAccount(UserAccount u)
+{
+    cout << "Username: " << u.username << endl;
+    cout << "Login Attempts: " << u.loginAttempts << endl;
+
+    if (u.loginAttempts >= 3)
+    {
+        cout << "Account Status: Account Locked" << endl;
+    }
+    else
+    {
+        cout << "Account Status: Account Active" << endl;
+    }
+}
+
+int main()
+{
+    UserAccount u("Nishant", 2, "Active");
+
+    checkAccount(u);
+
+    return 0;
+}

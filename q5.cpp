@@ -1,50 +1,41 @@
 #include <iostream>
 using namespace std;
 
-class MobileRecharge
+class EventParticipant
 {
 private:
-    string mobileNo, customerName;
-    float balance, recharge;
+    string participantName;
+    int age;
+    string registrationStatus;
 
 public:
-    void input()
+    EventParticipant(string name, int a, string status)
     {
-        cout << "Enter Mobile Number: ";
-        cin >> mobileNo;
-        cout << "Enter Customer Name: ";
-        cin >> customerName;
-        cout << "Enter Current Balance: ";
-        cin >> balance;
+        participantName = name;
+        age = a;
+        registrationStatus = status;
     }
 
-    void rechargeBalance()
-    {
-        cout << "Enter Recharge Amount: ";
-        cin >> recharge;
-
-        if (recharge <= balance)
-        {
-            balance = balance - recharge;
-            cout << "Recharge Successful!\n";
-        }
-        else
-        {
-            cout << "Insufficient Balance!\n";
-        }
-    }
-
-    void display()
-    {
-        cout << "Updated Balance = " << balance << endl;
-    }
+    friend void verifyParticipant(EventParticipant p);
 };
+
+void verifyParticipant(EventParticipant p)
+{
+    cout << "Participant Name: " << p.participantName << endl;
+    cout << "Age: " << p.age << endl;
+    cout << "Registration Status: " << p.registrationStatus << endl;
+
+    if (p.age >= 18 && p.registrationStatus == "Active")
+        cout << "Eligibility: Eligible" << endl;
+    else
+        cout << "Eligibility: Not Eligible" << endl;
+}
 
 int main()
 {
-    MobileRecharge m;
-    m.input();
-    m.rechargeBalance();
-    m.display();
+    EventParticipant p("Nishant", 19, "Active");
+
+    verifyParticipant(p);
+
     return 0;
 }

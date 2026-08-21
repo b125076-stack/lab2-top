@@ -1,32 +1,43 @@
 #include<iostream>
 using namespace std;
-class car {
 
-    string brand;
-    int car_no;
-    int yearmodel;
-    public:
-    void input(){
-        cout<<" enter the carnumber";
-        cin >> car_no;
-        cout<<"enter the brandname";
-        cin >> brand;
-        cout<<" enter the yearmodel";
-        cin >> yearmodel;
+class Weather
+{
+private:
+    string cityName;
+    float temperature;
+    string weatherCondition;
 
+public:
+    Weather(string city, float temp, string condition)
+    {
+        cityName = city;
+        temperature = temp;
+        weatherCondition = condition;
     }
-    void display()
-{       cout<<" !! car details !!";
-        cout<<" the carnumber is "<< car_no<<endl;
-        cout<<" the brand of car is"<<brand  <<endl;
-        cout<<" the yearmodel"<<yearmodel<<endl;
 
-    
-    }
+    friend void generateReport(Weather w);
 };
-int main(){
-    car c;
-    c.input();
-    c.display();
+
+void generateReport(Weather w)
+{
+    cout << "City: " << w.cityName << endl;
+    cout << "Temperature: " << w.temperature << " C" << endl;
+    cout << "Weather Condition: " << w.weatherCondition << endl;
+
+    if (w.temperature > 35)
+        cout << "Classification: Very Hot" << endl;
+    else if (w.temperature >= 20)
+        cout << "Classification: Pleasant" << endl;
+    else
+        cout << "Classification: Cool" << endl;
+}
+
+int main()
+{
+    Weather w("udaipur", 29, "Sunny");
+
+    generateReport(w);
+
     return 0;
 }

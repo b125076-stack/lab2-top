@@ -1,41 +1,78 @@
-#include<iostream>
+#include <iostream>
 using namespace std;
-class hostelfee{
-    string student_name;
-    int id,months;
-    float monthyfee,totalfee;
-    char delayed;
-    public:
-    void input(){
-        cout<<"enter the student_name:";
-        cin>>student_name;
-        cout<<" enter id :";
-        cin>>id;
-        cout<<"enter the no. of months";
-        cin>>months;
-        cout<<"payment delayed? (y/n)";
-        cin>>delayed;
 
+class VehicleService
+{
+private:
+    string vehicleNumber;
+    string ownerName;
+    string serviceStatus;
+    int lastServiceKilometres;
 
-    }
-    void calculate(){
-        totalfee = monthyfee * months;
-        if(delayed == 'y'|| delayed == 'n')
-        totalfee+=500;
-
-        
-    }
-    void display(){
-        cout<<"\n students name"<<student_name<<endl;
-        cout<<"\n hostel id"<<id<<endl;
-        cout<<"\n months "<<months<<endl;
+public:
+    VehicleService(string number, string owner, int km)
+    {
+        vehicleNumber = number;
+        ownerName = owner;
+        serviceStatus = "Pending";
+        lastServiceKilometres = km;
     }
 
+    friend class ServiceManager;
 };
-    int main(){
-        hostelfee f;
-        f.input();
-        f.calculate();
-        f.display();
-        return 0;
+
+class ServiceManager
+{
+public:
+    void displayInformation(VehicleService &v)
+    {
+        cout << "Vehicle Number: " << v.vehicleNumber << endl;
+        cout << "Owner Name: " << v.ownerName << endl;
+        cout << "Service Status: " << v.serviceStatus << endl;
+        cout << "Last Service Kilometres: "
+             << v.lastServiceKilometres << " km" << endl;
     }
+
+    void markServiceCompleted(VehicleService &v)
+    {
+        v.serviceStatus = "Completed";
+        cout << "Service marked as completed." << endl;
+    }
+
+    void updateServiceKilometres(VehicleService &v, int km)
+    {
+        v.lastServiceKilometres = km;
+        cout << "Service kilometres updated." << endl;
+    }
+
+    void checkServiceRequired(VehicleService &v, int currentKm)
+    {
+        if (v.serviceStatus == "Pending" &&
+            currentKm - v.lastServiceKilometres >= 5000)
+        {
+            cout << "Service is REQUIRED." << endl;
+        }
+        else
+        {
+            cout << "Service is NOT required." << endl;
+        }
+    }
+};
+
+int main()
+{
+    VehicleService v("MH12AB1234", "Nishant", 10000);
+    ServiceManager manager;
+
+    manager.displayInformation(v);
+
+    manager.checkServiceRequired(v, 16000);
+
+    manager.markServiceCompleted(v);
+
+    manager.updateServiceKilometres(v, 16000);
+
+    manager.displayInformation(v);
+
+    return 0;
+}
