@@ -1,82 +1,35 @@
 #include <iostream>
 using namespace std;
 
-class DigitalWallet
+void inspect(int x)
 {
-private:
-    string userName;
-    double walletBalance;
-    string walletStatus;
+    cout << "Value of integer = " << x << endl;
+}
 
-public:
-    DigitalWallet(string name, double balance)
-    {
-        userName = name;
-        walletBalance = balance;
-        walletStatus = "Active";
-    }
-
-    friend class WalletManager;
-};
-
-class WalletManager
+void inspect(int *p)
 {
-public:
-    void displayWallet(DigitalWallet &w)
-    {
-        cout << "User Name: " << w.userName << endl;
-        cout << "Wallet Balance: " << w.walletBalance << endl;
-        cout << "Wallet Status: " << w.walletStatus << endl;
-    }
+    cout << "Value stored at pointer = " << *p << endl;
+}
 
-    void addMoney(DigitalWallet &w, double amount)
-    {
-        w.walletBalance += amount;
-        cout << "Money added successfully." << endl;
-    }
+void inspect(int *arr, int size)
+{
+    cout << "Array elements: ";
 
-    void deductMoney(DigitalWallet &w, double amount)
-    {
-        if (w.walletBalance >= amount)
-        {
-            w.walletBalance -= amount;
-            cout << "Money deducted successfully." << endl;
-        }
-        else
-        {
-            cout << "Insufficient balance." << endl;
-        }
-    }
+    for (int i = 0; i < size; i++)
+        cout << arr[i] << " ";
 
-    void disableWallet(DigitalWallet &w)
-    {
-        w.walletStatus = "Disabled";
-        cout << "Wallet disabled." << endl;
-    }
-
-    void displayStatus(DigitalWallet &w)
-    {
-        cout << "Current Wallet Status: "
-             << w.walletStatus << endl;
-    }
-};
+    cout << endl;
+}
 
 int main()
 {
-    DigitalWallet wallet("Nishant", 1000);
-    WalletManager manager;
+    int x = 10;
+    int arr[] = {1, 2, 3, 4, 5};
+    int size = 5;
 
-    manager.displayWallet(wallet);
-
-    manager.addMoney(wallet, 500);
-
-    manager.deductMoney(wallet, 300);
-
-    manager.displayWallet(wallet);
-
-    manager.disableWallet(wallet);
-
-    manager.displayStatus(wallet);
+    inspect(x);
+    inspect(&x);
+    inspect(arr, size);
 
     return 0;
 }

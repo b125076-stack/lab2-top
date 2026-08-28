@@ -1,78 +1,53 @@
 #include <iostream>
 using namespace std;
 
-class VehicleService
+void update(int &x, int amount)
 {
-private:
-    string vehicleNumber;
-    string ownerName;
-    string serviceStatus;
-    int lastServiceKilometres;
+    x += amount;
+}
 
-public:
-    VehicleService(string number, string owner, int km)
-    {
-        vehicleNumber = number;
-        ownerName = owner;
-        serviceStatus = "Pending";
-        lastServiceKilometres = km;
-    }
-
-    friend class ServiceManager;
-};
-
-class ServiceManager
+void update(float &x, float amount)
 {
-public:
-    void displayInformation(VehicleService &v)
-    {
-        cout << "Vehicle Number: " << v.vehicleNumber << endl;
-        cout << "Owner Name: " << v.ownerName << endl;
-        cout << "Service Status: " << v.serviceStatus << endl;
-        cout << "Last Service Kilometres: "
-             << v.lastServiceKilometres << " km" << endl;
-    }
+    x += amount;
+}
 
-    void markServiceCompleted(VehicleService &v)
-    {
-        v.serviceStatus = "Completed";
-        cout << "Service marked as completed." << endl;
-    }
-
-    void updateServiceKilometres(VehicleService &v, int km)
-    {
-        v.lastServiceKilometres = km;
-        cout << "Service kilometres updated." << endl;
-    }
-
-    void checkServiceRequired(VehicleService &v, int currentKm)
-    {
-        if (v.serviceStatus == "Pending" &&
-            currentKm - v.lastServiceKilometres >= 5000)
-        {
-            cout << "Service is REQUIRED." << endl;
-        }
-        else
-        {
-            cout << "Service is NOT required." << endl;
-        }
-    }
-};
+void update(int arr[], int size, int amount)
+{
+    for (int i = 0; i < size; i++)
+        arr[i] += amount;
+}
 
 int main()
 {
-    VehicleService v("MH12AB1234", "Nishant", 10000);
-    ServiceManager manager;
+    int x;
+    float y;
+    int arr[100], n, amount;
 
-    manager.displayInformation(v);
+    cin >> x >> amount;
+    cout << "Before: " << x << endl;
+    update(x, amount);
+    cout << "After: " << x << endl;
 
-    manager.checkServiceRequired(v, 16000);
+    cin >> y;
+    float fAmount;
+    cin >> fAmount;
 
-    manager.markServiceCompleted(v);
+    cout << "Before: " << y << endl;
+    update(y, fAmount);
+    cout << "After: " << y << endl;
 
-    manager.updateServiceKilometres(v, 16000);
+    cin >> n;
 
-    manager.displayInformation(v);
+    for (int i = 0; i < n; i++)
+        cin >> arr[i];
+
+    cin >> amount;
+
+    update(arr, n, amount);
+
+    cout << "Updated array: ";
+    for (int i = 0; i < n; i++)
+        cout << arr[i] << " ";
 
     return 0;
 }

@@ -1,44 +1,44 @@
 #include <iostream>
 using namespace std;
 
-class UserAccount
+void area(int side)
 {
-private:
-    string username;
-    int loginAttempts;
-    string accountStatus;
+    int result = side * side;
+    cout << "Area of square = " << result << endl;
+}
 
-public:
-    UserAccount(string name, int attempts, string status)
-    {
-        username = name;
-        loginAttempts = attempts;
-        accountStatus = status;
-    }
-
-    friend void checkAccount(UserAccount u);
-};
-
-void checkAccount(UserAccount u)
+void area(int length, int width)
 {
-    cout << "Username: " << u.username << endl;
-    cout << "Login Attempts: " << u.loginAttempts << endl;
+    int result = length * width;
+    cout << "Area of rectangle = " << result << endl;
+}
 
-    if (u.loginAttempts >= 3)
-    {
-        cout << "Account Status: Account Locked" << endl;
-    }
-    else
-    {
-        cout << "Account Status: Account Active" << endl;
-    }
+void area(double radius)
+{
+    double result = 3.14159 * radius * radius;
+    cout << "Area of circle = " << result << endl;
 }
 
 int main()
 {
-    UserAccount u("Nishant", 2, "Active");
+    int side;
+    int length, width;
+    double radius;
 
-    checkAccount(u);
+    cout << "Enter side of square: ";
+    cin >> side;
+
+    area(side);
+
+    cout << "Enter length and width of rectangle: ";
+    cin >> length >> width;
+
+    area(length, width);
+
+    cout << "Enter radius of circle: ";
+    cin >> radius;
+
+    area(radius);
 
     return 0;
 }

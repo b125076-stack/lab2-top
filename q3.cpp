@@ -1,53 +1,70 @@
 #include <iostream>
 using namespace std;
 
-class Camera
+void check(int n)
 {
-private:
-    string brand;
-    string model;
-    int megapixels;
-    int storageCapacity;
+    if (n > 0)
+        cout << "Positive number" << endl;
+    else if (n < 0)
+        cout << "Negative number" << endl;
+    else
+        cout << "Zero" << endl;
+}
 
-public:
-    Camera(string b, string m, int mp, int storage)
-    {
-        brand = b;
-        model = m;
-        megapixels = mp;
-        storageCapacity = storage;
-    }
-
-    friend void compareCamera(Camera c1, Camera c2);
-};
-
-void compareCamera(Camera c1, Camera c2)
+void check(char ch)
 {
-    Camera better = c1;
+    if (ch >= 'A' && ch <= 'Z')
+        cout << "Uppercase letter" << endl;
+    else if (ch >= 'a' && ch <= 'z')
+        cout << "Lowercase letter" << endl;
+    else
+        cout << "Not an alphabet" << endl;
+}
 
-    if (c2.megapixels > c1.megapixels)
+void check(char arr[], int size, char target)
+{
+    bool found = false;
+
+    for (int i = 0; i < size; i++)
     {
-        better = c2;
-    }
-    else if (c1.megapixels == c2.megapixels)
-    {
-        if (c2.storageCapacity > c1.storageCapacity)
-            better = c2;
+        if (arr[i] == target)
+        {
+            cout << "Character found at position " << i << endl;
+            found = true;
+        }
     }
 
-    cout << "Better Camera:" << endl;
-    cout << "Brand: " << better.brand << endl;
-    cout << "Model: " << better.model << endl;
-    cout << "Megapixels: " << better.megapixels << endl;
-    cout << "Storage Capacity: " << better.storageCapacity << " GB" << endl;
+    if (!found)
+        cout << "Character not found" << endl;
 }
 
 int main()
 {
-    Camera c1("apple", "ioS 34D", 24, 64);
-    Camera c2("Samssung", " dd v9", 24, 128);
+    int n;
+    char ch;
+    char arr[100];
+    int size;
+    char target;
 
-    compareCamera(c1, c2);
+    cout << "Enter an integer: ";
+    cin >> n;
+    check(n);
+
+    cout << "Enter a character: ";
+    cin >> ch;
+    check(ch);
+
+    cout << "Enter size of character array: ";
+    cin >> size;
+
+    cout << "Enter characters: ";
+    for (int i = 0; i < size; i++)
+        cin >> arr[i];
+
+    cout << "Enter character to search: ";
+    cin >> target;
+
+    check(arr, size, target);
 
     return 0;
 }

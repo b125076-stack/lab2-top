@@ -1,85 +1,58 @@
-#include<iostream>
+#include <iostream>
+#include <cmath>
 using namespace std;
 
-class Exhibit
+void nearValue(int a, int b)
 {
-private:
-    string exhibitName;
-    int exhibitID;
-    int visitorCount;
-    bool displayStatus;
+    if (abs(a) < abs(b))
+        cout << a << " is closer to zero" << endl;
+    else if (abs(b) < abs(a))
+        cout << b << " is closer to zero" << endl;
+    else
+        cout << "Both are equally close to zero" << endl;
+}
 
-public:
-    Exhibit(string name, int id)
-    {
-        exhibitName = name;
-        exhibitID = id;
-        visitorCount = 0;
-        displayStatus = false;
-    }
-
-    friend class MuseumManager;
-};
-
-class MuseumManager
+void nearValue(float a, float b)
 {
-public:
-    void displayInformation(Exhibit &e)
-    {
-        cout << "Exhibit Name: " << e.exhibitName << endl;
-        cout << "Exhibit ID: " << e.exhibitID << endl;
-        cout << "Visitor Count: " << e.visitorCount << endl;
+    if (fabs(a) < fabs(b))
+        cout << a << " is closer to zero" << endl;
+    else if (fabs(b) < fabs(a))
+        cout << b << " is closer to zero" << endl;
+    else
+        cout << "Both are equally close to zero" << endl;
+}
 
-        if (e.displayStatus)
-            cout << "Display Status: Open" << endl;
-        else
-            cout << "Display Status: Closed" << endl;
+void nearValue(int arr[], int size)
+{
+    int nearest = arr[0];
+
+    for (int i = 1; i < size; i++)
+    {
+        if (abs(arr[i]) < abs(nearest))
+            nearest = arr[i];
     }
 
-    void addVisitor(Exhibit &e)
-    {
-        e.visitorCount++;
-        cout << "Visitor added." << endl;
-    }
-
-    void resetVisitorCount(Exhibit &e)
-    {
-        e.visitorCount = 0;
-        cout << "Visitor count reset." << endl;
-    }
-
-    void openCloseExhibit(Exhibit &e)
-    {
-        e.displayStatus = !e.displayStatus;
-
-        if (e.displayStatus)
-            cout << "Exhibit Opened." << endl;
-        else
-            cout << "Exhibit Closed." << endl;
-    }
-
-    void checkStatus(Exhibit &e)
-    {
-        if (e.displayStatus)
-            cout << "Exhibit is currently OPEN." << endl;
-        else
-            cout << "Exhibit is currently CLOSED." << endl;
-    }
-};
+    cout << nearest << " is closest to zero" << endl;
+}
 
 int main()
 {
-    Exhibit e("Dinosaur Fossil", 101);
-    MuseumManager m;
+    int a =4, b =3;
+    float x =2.34, y =3.4;
+    int arr[100] , n;
+    cout<<" enter the no : "<<endl;
+    cin >> a >> b;
+    nearValue(a, b);
+    cout<<" Enter the float : "<<endl; 
+    cin >> x >> y;
+    nearValue(x, y);
 
-    m.openCloseExhibit(e);
-    m.addVisitor(e);
-    m.addVisitor(e);
+    cin >> n;
 
-    m.displayInformation(e);
-    m.checkStatus(e);
+    for (int i = 0; i < n; i++)
+        cin >> arr[i];
 
-    m.resetVisitorCount(e);
+    nearValue(arr, n);
 
     return 0;
 }

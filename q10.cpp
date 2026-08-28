@@ -1,83 +1,59 @@
 #include <iostream>
 using namespace std;
 
-class Classroom
+void evaluate(int a, int b)
 {
-private:
-    string className;
-    int totalStudents;
-    int presentStudents;
-    string attendanceStatus;
+    cout << "Average = " << (a + b) / 2.0 << endl;
+}
 
-public:
-    Classroom(string name, int total)
-    {
-        className = name;
-        totalStudents = total;
-        presentStudents = 0;
-        attendanceStatus = "Not Completed";
-    }
-
-    friend class AttendanceManager;
-};
-
-class AttendanceManager
+void evaluate(int a, int b, int c)
 {
-public:
-    void displayInformation(Classroom &c)
-    {
-        cout << "Class Name: " << c.className << endl;
-        cout << "Total Students: " << c.totalStudents << endl;
-        cout << "Present Students: " << c.presentStudents << endl;
-        cout << "Attendance Status: " << c.attendanceStatus << endl;
-    }
+    cout << "Average = " << (a + b + c) / 3.0 << endl;
+}
 
-    void updatePresentStudents(Classroom &c, int present)
-    {
-        if (present <= c.totalStudents)
-        {
-            c.presentStudents = present;
-            cout << "Present student count updated." << endl;
-        }
-        else
-        {
-            cout << "Invalid number of students." << endl;
-        }
-    }
+void evaluate(float a, float b)
+{
+    cout << "Average = " << (a + b) / 2 << endl;
+}
 
-    void markAttendanceCompleted(Classroom &c)
-    {
-        c.attendanceStatus = "Completed";
-        cout << "Attendance marked as completed." << endl;
-    }
+void evaluate(int arr[], int size)
+{
+    int sum = 0;
 
-    void displayAttendanceStatus(Classroom &c)
-    {
-        cout << "Attendance Status: "
-             << c.attendanceStatus << endl;
-    }
+    for (int i = 0; i < size; i++)
+        sum += arr[i];
 
-    void calculateAbsentStudents(Classroom &c)
-    {
-        int absentStudents =
-            c.totalStudents - c.presentStudents;
+    cout << "Average = " << (double)sum / size << endl;
+}
 
-        cout << "Absent Students: " << absentStudents << endl;
-    }
-};
+void evaluate(int *a, int *b)
+{
+    cout << "Average = " << (*a + *b) / 2.0 << endl;
+}
 
 int main()
 {
-    Classroom c("CSE-b", 70);
-    AttendanceManager manager;
+    int a, b, c;
+    float x, y;
+    int arr[100], n;
 
-    manager.updatePresentStudents(c, 52);
+    cin >> a >> b;
+    evaluate(a, b);
 
-    manager.markAttendanceCompleted(c);
+    cin >> c;
+    evaluate(a, b, c);
 
-    manager.displayInformation(c);
+    cin >> x >> y;
+    evaluate(x, y);
 
-    manager.calculateAbsentStudents(c);
+    cin >> n;
+
+    for (int i = 0; i < n; i++)
+        cin >> arr[i];
+
+    evaluate(arr, n);
+
+    evaluate(&a, &b);
 
     return 0;
 }

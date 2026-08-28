@@ -1,41 +1,44 @@
 #include <iostream>
 using namespace std;
 
-class EventParticipant
+void swapData(int &a, int &b)
 {
-private:
-    string participantName;
-    int age;
-    string registrationStatus;
+    int temp = a;
+    a = b;
+    b = temp;
+}
 
-public:
-    EventParticipant(string name, int a, string status)
-    {
-        participantName = name;
-        age = a;
-        registrationStatus = status;
-    }
-
-    friend void verifyParticipant(EventParticipant p);
-};
-
-void verifyParticipant(EventParticipant p)
+void swapData(float &a, float &b)
 {
-    cout << "Participant Name: " << p.participantName << endl;
-    cout << "Age: " << p.age << endl;
-    cout << "Registration Status: " << p.registrationStatus << endl;
+    float temp = a;
+    a = b;
+    b = temp;
+}
 
-    if (p.age >= 18 && p.registrationStatus == "Active")
-        cout << "Eligibility: Eligible" << endl;
-    else
-        cout << "Eligibility: Not Eligible" << endl;
+void swapData(int *a, int *b)
+{
+    int temp = *a;
+    *a = *b;
+    *b = temp;
 }
 
 int main()
 {
-    EventParticipant p("Nishant", 19, "Active");
+    int a = 10, b = 20;
+    float x = 1.5, y = 2.5;
+    int p = 30, q = 40;
 
-    verifyParticipant(p);
+    cout << "Before integer swap: " << a << " " << b << endl;
+    swapData(a, b);
+    cout << "After integer swap: " << a << " " << b << endl;
+
+    cout << "Before float swap: " << x << " " << y << endl;
+    swapData(x, y);
+    cout << "After float swap: " << x << " " << y << endl;
+
+    cout << "Before pointer swap: " << p << " " << q << endl;
+    swapData(&p, &q);
+    cout << "After pointer swap: " << p << " " << q << endl;
 
     return 0;
 }

@@ -1,80 +1,58 @@
 #include <iostream>
+#include <cstring>
 using namespace std;
 
-class Printer
+void information(char arr[])
 {
-private:
-    string printerName;
-    int pagesPrinted;
-    int inkLevel;
-    bool powerStatus;
+    int length = strlen(arr);
+    cout << "Length = " << length << endl;
+}
 
-public:
-    Printer(string name)
-    {
-        printerName = name;
-        pagesPrinted = 0;
-        inkLevel = 100;
-        powerStatus = false;
-    }
-
-    friend class PrinterManager;
-};
-
-class PrinterManager
+void information(char arr[], char target)
 {
-public:
+    int count = 0;
 
-    void displayPrinterInfo(Printer &p)
+    for (int i = 0; arr[i] != '\0'; i++)
     {
-        cout << "Printer Name: " << p.printerName << endl;
-        cout << "Pages Printed: " << p.pagesPrinted << endl;
-        cout << "Ink Level: " << p.inkLevel << "%" << endl;
-
-        if (p.powerStatus)
-            cout << "Power Status: ON" << endl;
-        else
-            cout << "Power Status: OFF" << endl;
+        if (arr[i] == target)
+            count++;
     }
 
-    void turnOn(Printer &p)
+    cout << "Occurrence = " << count << endl;
+}
+
+void information(char arr[], char target, int positions)
+{
+    int count = 0;
+
+    for (int i = 0; i < positions && arr[i] != '\0'; i++)
     {
-        p.powerStatus = true;
-        cout << "Printer turned ON." << endl;
+        if (arr[i] == target)
+            count++;
     }
 
-    void turnOff(Printer &p)
-    {
-        p.powerStatus = false;
-        cout << "Printer turned OFF." << endl;
-    }
-
-    void checkInkLevel(Printer &p)
-    {
-        cout << "Ink Level: " << p.inkLevel << "%" << endl;
-    }
-
-    void resetPageCount(Printer &p)
-    {
-        p.pagesPrinted = 0;
-        cout << "Page count reset successfully." << endl;
-    }
-};
+    cout << "Occurrence in first " << positions
+         << " positions = " << count << endl;
+}
 
 int main()
 {
-    Printer p("HP LaserJet");
-    PrinterManager manager;
+    char arr[100];
+    char target;
+    int positions;
 
-    manager.displayPrinterInfo(p);
+    cout << "Enter a string: ";
+    cin >> arr;
 
-    manager.turnOn(p);
+    cout << "Enter character: ";
+    cin >> target;
 
-    manager.checkInkLevel(p);
+    cout << "Enter number of positions: ";
+    cin >> positions;
 
-    manager.resetPageCount(p);
-
-    manager.turnOff(p);
+    information(arr);
+    information(arr, target);
+    information(arr, target, positions);
 
     return 0;
 }
