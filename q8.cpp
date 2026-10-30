@@ -1,53 +1,47 @@
 #include <iostream>
 using namespace std;
 
-void update(int &x, int amount)
-{
-    x += amount;
-}
+class TrafficSignal {
+public:
+    virtual int getGreenDuration(int vehicleCount) = 0;
+    virtual ~TrafficSignal() {}
+};
 
-void update(float &x, float amount)
-{
-    x += amount;
-}
+class UrbanSignal : public TrafficSignal {
+public:
+    int getGreenDuration(int vehicleCount) override {
+        int duration = 10 + 2 * vehicleCount;
+        return (duration > 60) ? 60 : duration;
+    }
+};
 
-void update(int arr[], int size, int amount)
-{
-    for (int i = 0; i < size; i++)
-        arr[i] += amount;
-}
+class HighwaySignal : public TrafficSignal {
+public:
+    int getGreenDuration(int vehicleCount) override {
+        int duration = 15 + 3 * vehicleCount;
+        return (duration > 90) ? 90 : duration;
+    }
+};
 
-int main()
-{
-    int x;
-    float y;
-    int arr[100], n, amount;
+int main() {
+    int urbanVehicles, highwayVehicles;
 
-    cin >> x >> amount;
-    cout << "Before: " << x << endl;
-    update(x, amount);
-    cout << "After: " << x << endl;
+    cout << "Enter vehicle count for urban signal: ";
+    cin >> urbanVehicles;
 
-    cin >> y;
-    float fAmount;
-    cin >> fAmount;
+    cout << "Enter vehicle count for highway signal: ";
+    cin >> highwayVehicles;
 
-    cout << "Before: " << y << endl;
-    update(y, fAmount);
-    cout << "After: " << y << endl;
+    UrbanSignal urban;
+    HighwaySignal highway;
 
-    cin >> n;
+    TrafficSignal* signal = &urban;
+    cout << "Urban green duration: "
+         << signal->getGreenDuration(urbanVehicles) << " seconds\n";
 
-    for (int i = 0; i < n; i++)
-        cin >> arr[i];
-
-    cin >> amount;
-
-    update(arr, n, amount);
-
-    cout << "Updated array: ";
-    for (int i = 0; i < n; i++)
-        cout << arr[i] << " ";
+    signal = &highway;
+    cout << "Highway green duration: "
+         << signal->getGreenDuration(highwayVehicles) << " seconds\n";
 
     return 0;
 }

@@ -1,58 +1,45 @@
 #include <iostream>
-#include <cstring>
 using namespace std;
 
-void information(char arr[])
-{
-    int length = strlen(arr);
-    cout << "Length = " << length << endl;
-}
-
-void information(char arr[], char target)
-{
-    int count = 0;
-
-    for (int i = 0; arr[i] != '\0'; i++)
-    {
-        if (arr[i] == target)
-            count++;
+class Document {
+public:
+    virtual void exportFile() {
+        cout << "Exporting document\n";
     }
 
-    cout << "Occurrence = " << count << endl;
-}
+    virtual ~Document() {}
+};
 
-void information(char arr[], char target, int positions)
-{
-    int count = 0;
-
-    for (int i = 0; i < positions && arr[i] != '\0'; i++)
-    {
-        if (arr[i] == target)
-            count++;
+class PDFDocument : public Document {
+public:
+    void exportFile() override {
+        cout << "Export format: PDF, file extension: .pdf\n";
     }
+};
 
-    cout << "Occurrence in first " << positions
-         << " positions = " << count << endl;
-}
+class TextDocument : public Document {
+public:
+    void exportFile() override {
+        cout << "Export format: Plain text, file extension: .txt\n";
+    }
+};
 
-int main()
-{
-    char arr[100];
-    char target;
-    int positions;
+class CSVDocument : public Document {
+public:
+    void exportFile() override {
+        cout << "Export format: CSV, file extension: .csv\n";
+    }
+};
 
-    cout << "Enter a string: ";
-    cin >> arr;
+int main() {
+    PDFDocument pdf;
+    TextDocument text;
+    CSVDocument csv;
 
-    cout << "Enter character: ";
-    cin >> target;
+    Document* documents[] = {&pdf, &text, &csv};
 
-    cout << "Enter number of positions: ";
-    cin >> positions;
-
-    information(arr);
-    information(arr, target);
-    information(arr, target, positions);
+    for (Document* document : documents)
+        document->exportFile();
 
     return 0;
 }
