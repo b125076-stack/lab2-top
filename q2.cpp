@@ -1,44 +1,52 @@
 #include <iostream>
+#include <string>
 using namespace std;
 
-void area(int side)
-{
-    int result = side * side;
-    cout << "Area of square = " << result << endl;
-}
+class Image {
+protected:
+    int width;
+    int height;
 
-void area(int length, int width)
-{
-    int result = length * width;
-    cout << "Area of rectangle = " << result << endl;
-}
+public:
+    Image(int w, int h) : width(w), height(h) {}
+};
 
-void area(double radius)
-{
-    double result = 3.14159 * radius * radius;
-    cout << "Area of circle = " << result << endl;
-}
+class CompressedImage : public Image {
+protected:
+    double compressionPercentage;
 
-int main()
-{
-    int side;
-    int length, width;
-    double radius;
+public:
+    CompressedImage(int w, int h, double percentage)
+        : Image(w, h), compressionPercentage(percentage) {}
+};
 
-    cout << "Enter side of square: ";
-    cin >> side;
+class EncryptedImage : public CompressedImage {
+private:
+    string encryptionAlgorithm;
 
-    area(side);
+public:
+    EncryptedImage(int w, int h, double percentage, string algorithm)
+        : CompressedImage(w, h, percentage),
+          encryptionAlgorithm(algorithm) {}
 
-    cout << "Enter length and width of rectangle: ";
-    cin >> length >> width;
+    void displayMetadata() const {
+        long long originalPixels = 1LL * width * height;
+        double effectivePixels =
+            originalPixels * compressionPercentage / 100.0;
 
-    area(length, width);
+        cout << "Image width: " << width << " pixels\n";
+        cout << "Image height: " << height << " pixels\n";
+        cout << "Original pixel count: " << originalPixels << '\n';
+        cout << "Compression: " << compressionPercentage << "%\n";
+        cout << "Effective pixel-equivalent size: "
+             << effectivePixels << '\n';
+        cout << "Encryption algorithm: " << encryptionAlgorithm << '\n';
+    }
+};
 
-    cout << "Enter radius of circle: ";
-    cin >> radius;
-
-    area(radius);
+int main() {
+    EncryptedImage image(1920, 1080, 50, "AES");
+    image.displayMetadata();
 
     return 0;
 }

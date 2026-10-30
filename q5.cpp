@@ -1,44 +1,54 @@
 #include <iostream>
 using namespace std;
 
-void swapData(int &a, int &b)
-{
-    int temp = a;
-    a = b;
-    b = temp;
-}
+class Sensor {
+protected:
+    int sensorId;
 
-void swapData(float &a, float &b)
-{
-    float temp = a;
-    a = b;
-    b = temp;
-}
+public:
+    Sensor(int id) : sensorId(id) {}
+};
 
-void swapData(int *a, int *b)
-{
-    int temp = *a;
-    *a = *b;
-    *b = temp;
-}
+class Temperature : virtual public Sensor {
+protected:
+    double temperatureCelsius;
 
-int main()
-{
-    int a = 10, b = 20;
-    float x = 1.5, y = 2.5;
-    int p = 30, q = 40;
+public:
+    Temperature(int id, double temperature)
+        : Sensor(id), temperatureCelsius(temperature) {}
+};
 
-    cout << "Before integer swap: " << a << " " << b << endl;
-    swapData(a, b);
-    cout << "After integer swap: " << a << " " << b << endl;
+class Humidity : virtual public Sensor {
+protected:
+    double humidityPercentage;
 
-    cout << "Before float swap: " << x << " " << y << endl;
-    swapData(x, y);
-    cout << "After float swap: " << x << " " << y << endl;
+public:
+    Humidity(int id, double humidity)
+        : Sensor(id), humidityPercentage(humidity) {}
+};
 
-    cout << "Before pointer swap: " << p << " " << q << endl;
-    swapData(&p, &q);
-    cout << "After pointer swap: " << p << " " << q << endl;
+class FarmMonitor : public Temperature, public Humidity {
+public:
+    FarmMonitor(int id, double temperature, double humidity)
+        : Sensor(id),
+          Temperature(id, temperature),
+          Humidity(id, humidity) {}
+
+    void display() const {
+        cout << "Sensor ID: " << sensorId << '\n';
+        cout << "Temperature: " << temperatureCelsius << " C\n";
+        cout << "Humidity: " << humidityPercentage << "%\n";
+
+        if (temperatureCelsius > 35 || humidityPercentage > 80)
+            cout << "Warning: Temperature or humidity is too high.\n";
+        else
+            cout << "Conditions are within safe limits.\n";
+    }
+};
+
+int main() {
+    FarmMonitor monitor(101, 37.5, 72.0);
+    monitor.display();
 
     return 0;
 }

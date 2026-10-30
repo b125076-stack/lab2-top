@@ -1,46 +1,40 @@
 #include <iostream>
+#include <string>
 using namespace std;
 
-void convert(int km)
-{
-    int meters = km * 1000;
-    cout << km << " kilometers = " << meters << " meters" << endl;
-}
+class Ticket {
+protected:
+    string passengerName;
+    double distanceKm;
 
-void convert(int meters, char)
-{
-    int centimeters = meters * 100;
-    cout << meters << " meters = " << centimeters
-         << " centimeters" << endl;
-}
+public:
+    Ticket(string name, double distance)
+        : passengerName(name), distanceKm(distance) {}
+};
 
-void convert(float km)
-{
-    float meters = km * 1000;
-    cout << km << " kilometers = " << meters
-         << " meters" << endl;
-}
+class RailwayTicket : public Ticket {
+private:
+    double farePerKm;
 
-int main()
-{
-    int km;
-    int meters;
-    float decimalKm;
+public:
+    RailwayTicket(string name, double distance, double rate)
+        : Ticket(name, distance), farePerKm(rate) {}
 
-    cout << "Enter distance in kilometers (integer): ";
-    cin >> km;
+    void displayTicket() const {
+        double fare = distanceKm * farePerKm;
 
-    convert(km);
+        if (distanceKm > 300)
+            fare = fare - (fare*0.10);
 
-    cout << "Enter distance in meters: ";
-    cin >> meters;
+        cout << "Passenger: " << passengerName << '\n';
+        cout << "Distance: " << distanceKm << " km\n";
+        cout << "Final fare: Rs. " << fare << '\n';
+    }
+};
 
-    convert(meters);
-
-    cout << "Enter distance in kilometers (decimal): ";
-    cin >> decimalKm;
-
-    convert(decimalKm);
+int main() {
+    RailwayTicket ticket("nishant", 3500, 20);
+    ticket.displayTicket();
 
     return 0;
 }

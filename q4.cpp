@@ -1,64 +1,41 @@
 #include <iostream>
 using namespace std;
 
-void process(int arr[], int size)
-{
-    int sum = 0;
+class LibraryAccess {
+protected:
+    int booksBorrowed;
 
-    for (int i = 0; i < size; i++)
-        sum += arr[i];
+public:
+    LibraryAccess(int books) : booksBorrowed(books) {}
+};
 
-    cout << "Sum of integer array = " << sum << endl;
-}
+class LaboratoryAccess {
+protected:
+    int pendingSubmissions;
 
-void process(float arr[], int size)
-{
-    float sum = 0;
+public:
+    LaboratoryAccess(int submissions) : pendingSubmissions(submissions) {}
+};
 
-    for (int i = 0; i < size; i++)
-        sum += arr[i];
+class StudentAccess : public LibraryAccess, public LaboratoryAccess {
+public:
+    StudentAccess(int books, int submissions)
+        : LibraryAccess(books), LaboratoryAccess(submissions) {}
 
-    cout << "Sum of float array = " << sum << endl;
-}
+    void displayAccessStatus() const {
+        if (booksBorrowed <= 5 && pendingSubmissions == 0)
+            cout << "Full resource access granted.\n";
+        else
+            cout << "Full resource access denied.\n";
 
-void process(int arr[], int size, int n)
-{
-    int sum = 0;
+        cout << "Books borrowed: " << booksBorrowed << '\n';
+        cout << "Pending lab submissions: " << pendingSubmissions << '\n';
+    }
+};
 
-    for (int i = 0; i < n; i++)
-        sum += arr[i];
-
-    cout << "Sum of first " << n << " elements = " << sum << endl;
-}
-
-int main()
-{
-    int a[100], n;
-    float b[100], m;
-    int k;
-
-    cout << "Enter size of integer array: ";
-    cin >> n;
-
-    cout << "Enter integer elements: ";
-    for (int i = 0; i < n; i++)
-        cin >> a[i];
-
-    process(a, n);
-
-    cout << "Enter size of float array: ";
-    cin >> m;
-
-    cout << "Enter float elements: ";
-    for (int i = 0; i < m; i++)
-        cin >> b[i];
-
-    process(b, m);
-
-    cout << "Enter number of elements to sum from integer array: ";
-    cin >> k;
-
-    process(a, n, k);
+int main() {
+    StudentAccess student(3, 0);
+    student.displayAccessStatus();
 
     return 0;
 }

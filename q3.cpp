@@ -1,70 +1,46 @@
 #include <iostream>
 using namespace std;
 
-void check(int n)
-{
-    if (n > 0)
-        cout << "Positive number" << endl;
-    else if (n < 0)
-        cout << "Negative number" << endl;
-    else
-        cout << "Zero" << endl;
-}
+class Candidate {
+protected:
+    int candidateId;
+    double attendancePercentage;
 
-void check(char ch)
-{
-    if (ch >= 'A' && ch <= 'Z')
-        cout << "Uppercase letter" << endl;
-    else if (ch >= 'a' && ch <= 'z')
-        cout << "Lowercase letter" << endl;
-    else
-        cout << "Not an alphabet" << endl;
-}
+public:
+    Candidate(int id, double attendance)
+        : candidateId(id), attendancePercentage(attendance) {}
+};
 
-void check(char arr[], int size, char target)
-{
-    bool found = false;
+class RegularCandidate : public Candidate {
+public:
+    RegularCandidate(int id, double attendance)
+        : Candidate(id, attendance) {}
 
-    for (int i = 0; i < size; i++)
-    {
-        if (arr[i] == target)
-        {
-            cout << "Character found at position " << i << endl;
-            found = true;
-        }
+    void checkEligibility() const {
+        cout << "Regular candidate " << candidateId << ": "
+             << (attendancePercentage >= 75 ? "Eligible" : "Not eligible")
+             << '\n';
     }
+};
 
-    if (!found)
-        cout << "Character not found" << endl;
-}
+class ReappearCandidate : public Candidate {
+public:
+    ReappearCandidate(int id, double attendance)
+        : Candidate(id, attendance) {}
 
-int main()
-{
-    int n;
-    char ch;
-    char arr[100];
-    int size;
-    char target;
+    void checkEligibility() const {
+        cout << "Reappear candidate " << candidateId << ": "
+             << (attendancePercentage >= 60 ? "Eligible" : "Not eligible")
+             << '\n';
+    }
+};
 
-    cout << "Enter an integer: ";
-    cin >> n;
-    check(n);
+int main() {
+    RegularCandidate regular(101, 80);
+    ReappearCandidate reappear(202, 65);
 
-    cout << "Enter a character: ";
-    cin >> ch;
-    check(ch);
-
-    cout << "Enter size of character array: ";
-    cin >> size;
-
-    cout << "Enter characters: ";
-    for (int i = 0; i < size; i++)
-        cin >> arr[i];
-
-    cout << "Enter character to search: ";
-    cin >> target;
-
-    check(arr, size, target);
+    regular.checkEligibility();
+    reappear.checkEligibility();
 
     return 0;
 }
